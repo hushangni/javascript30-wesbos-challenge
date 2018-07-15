@@ -56,9 +56,20 @@
     }).join('');
   }
 
-  addItems.addEventListener('submit', addItem);
+  function toggleDone(e) {
+    if(!e.target.matches('input')) return; //skip this unless its an input
+    const el = e.target;
+    const index = el.dataset.index;
+    items[index].done = !items[index].done;
 
+    localStorage.setItem('items', JSON.stringify(items));
+    populateList(items, itemsList);
+    console.log(e.target);
+  }
+
+  addItems.addEventListener('submit', addItem);
   // populates list on page load if we need
+  itemsList.addEventListener('click', toggleDone);
   populateList(items, itemsList);
 
 
